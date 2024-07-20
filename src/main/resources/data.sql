@@ -1,0 +1,1 @@
+insert into customer(customerId, customerName , customerAddress,customerEmail) values('1','Jack','USA','jack@gmail.com');
