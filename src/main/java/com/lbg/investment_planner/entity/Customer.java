@@ -10,5 +10,5 @@ public class Customer {
     private String customerName;
     private String customerAddress;
     private String customerEmail;
-
+    private String dob;
 }
