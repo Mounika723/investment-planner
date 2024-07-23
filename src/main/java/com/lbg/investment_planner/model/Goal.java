@@ -1,4 +1,4 @@
-package com.lbg.investment_planner.entity;
+package com.lbg.investment_planner.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;

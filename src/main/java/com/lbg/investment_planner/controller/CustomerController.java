@@ -1,9 +1,6 @@
 package com.lbg.investment_planner.controller;
 
-import com.lbg.investment_planner.entity.AgeExpenseData;
-import com.lbg.investment_planner.entity.Customer;
-import com.lbg.investment_planner.entity.ExpensesSavings;
-import com.lbg.investment_planner.entity.Goal;
+import com.lbg.investment_planner.model.*;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 import com.lbg.investment_planner.service.CustomerService;
@@ -53,5 +50,14 @@ public class CustomerController {
     @GetMapping("goal/{customerId}")
     public List<Goal> getSuggestion(@PathVariable String customerId) {
         return customerService.findSuggestions(customerId);
+    }
+
+    @GetMapping("expensesCategory/{customerId}")
+    public List<TransactionLogging> getExpensesType(@PathVariable String customerId) {
+        return customerService.getExpensesCategory(customerId);
+    }
+    @GetMapping("expensesCategory/{customerId}/{expenseCategory}")
+    public List<TransactionLogging> getExpensesCategoryDetails(@PathVariable String customerId,@PathVariable String expenseCategory) {
+        return customerService.getExpensesDetailsOfCategory(customerId,expenseCategory);
     }
 }

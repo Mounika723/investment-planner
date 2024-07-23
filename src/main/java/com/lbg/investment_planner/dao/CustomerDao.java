@@ -1,10 +1,6 @@
 package com.lbg.investment_planner.dao;
 
-import com.lbg.investment_planner.entity.AgeExpenseData;
-import com.lbg.investment_planner.entity.Customer;
-import com.lbg.investment_planner.entity.ExpensesSavings;
-import com.lbg.investment_planner.entity.Goal;
-import org.springframework.stereotype.Repository;
+import com.lbg.investment_planner.model.*;
 
 import java.util.List;
 
@@ -24,4 +20,8 @@ public interface CustomerDao {
     Goal findGoalSuggestions(String customerId, String goalName);
 
     List<Goal> findSuggestions(String customerId);
+
+    List<TransactionLogging> getExpensesCategory(String customerId);
+
+    List<TransactionLogging> getExpensesDetailsOfCategory(String customerId, String expenseCategory);
 }

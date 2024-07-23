@@ -1,4 +1,4 @@
-package com.lbg.investment_planner.entity;
+package com.lbg.investment_planner.model;
 
 import lombok.Getter;
 import lombok.Setter;

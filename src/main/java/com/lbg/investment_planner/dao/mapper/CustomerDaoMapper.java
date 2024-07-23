@@ -1,6 +1,6 @@
 package com.lbg.investment_planner.dao.mapper;
 
-import com.lbg.investment_planner.entity.Customer;
+import com.lbg.investment_planner.model.Customer;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

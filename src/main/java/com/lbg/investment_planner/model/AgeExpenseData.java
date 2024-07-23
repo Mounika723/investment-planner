@@ -1,4 +1,4 @@
-package com.lbg.investment_planner.entity;
+package com.lbg.investment_planner.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
@@ -7,11 +7,9 @@ import lombok.Setter;
 @Setter
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ExpensesSavings {
-    private long customerId;
+public class AgeExpenseData {
     private String expenses;
     private String savings;
     private long age;
     private String income;
-
 }

@@ -1,16 +1,14 @@
 package com.lbg.investment_planner.dao;
 
 import com.lbg.investment_planner.dao.mapper.CustomerDaoMapper;
-import com.lbg.investment_planner.entity.AgeExpenseData;
-import com.lbg.investment_planner.entity.Customer;
-import com.lbg.investment_planner.entity.ExpensesSavings;
-import com.lbg.investment_planner.entity.Goal;
+import com.lbg.investment_planner.model.*;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -166,6 +164,95 @@ public class CustomerDaoImpl implements CustomerDao {
             }
             rs.close();
             return  goalList;
+        });
+    }
+
+    @Override
+    public List<TransactionLogging> getExpensesCategory(String customerId) {
+        SqlParameterSource parameters = new MapSqlParameterSource("customerId", customerId);
+        final String sql = "select typeOfExpense, sum(expenseAmount) expenseAmount from customerTransactionLogging where customerId=:customerId group by typeOfExpense";
+        return template.execute(sql, parameters, ps -> {
+            DecimalFormat df = new DecimalFormat("#.##");
+            ResultSet rs = ps.executeQuery();
+            List<TransactionLogging> transactionLoggingList = new ArrayList<>();
+            List<String> expenseCategoryList = List.of("Shopping","Food","Entertainment","Other");
+            double totalExpense = getExpensesSum(customerId);
+            double totalInvestment = getInvestmentsSum(customerId);
+            while (rs.next()){
+                TransactionLogging transactionLogging = new TransactionLogging();
+                transactionLogging.setCustomerId(Long.parseLong(customerId));
+                if(expenseCategoryList.contains(rs.getString("typeOfExpense"))){
+                transactionLogging.setExpenseAmount(rs.getLong("expenseAmount"));
+                transactionLogging.setTypeOfExpense(rs.getString("typeOfExpense"));
+                double expensePercentage = (rs.getLong("expenseAmount")/totalExpense)*100;
+                transactionLogging.setExpensePercentage(Double.parseDouble(df.format(expensePercentage)));
+                transactionLoggingList.add(transactionLogging);}
+                else{transactionLogging.setExpenseAmount(rs.getLong("expenseAmount"));
+                    transactionLogging.setTypeOfExpense(rs.getString("typeOfExpense"));
+                    double expensePercentage = (rs.getLong("expenseAmount")/totalInvestment)*100;
+                    transactionLogging.setExpensePercentage(Double.parseDouble(df.format(expensePercentage)));
+                    transactionLoggingList.add(transactionLogging);}
+
+            }
+            rs.close();
+            return  transactionLoggingList;
+        });
+    }
+
+    @Override
+    public List<TransactionLogging> getExpensesDetailsOfCategory(String customerId, String expenseCategory) {
+        SqlParameterSource parameters = new MapSqlParameterSource("customerId", customerId).addValue("expenseCategory",expenseCategory);
+        final String sql = "select * from customerTransactionLogging where customerId=:customerId and typeOfExpense=:expenseCategory";
+        double categoryExpense = (double) 0;
+                for (TransactionLogging expense: getExpensesCategory(customerId)){
+                    if (expense.getTypeOfExpense().equalsIgnoreCase(expenseCategory)){
+                        categoryExpense = expense.getExpenseAmount();
+                    }
+                }
+        double finalCategoryExpense = categoryExpense;
+        return template.execute(sql, parameters, ps -> {
+            ResultSet rs = ps.executeQuery();
+            List<TransactionLogging> transactionLoggingList = new ArrayList<>();
+            DecimalFormat df = new DecimalFormat("#.##");
+            while (rs.next()){
+                TransactionLogging transactionLogging = new TransactionLogging();
+                transactionLogging.setCustomerId(rs.getLong("customerId"));
+                transactionLogging.setExpenseSubType(rs.getString("expenseSubType"));
+                transactionLogging.setExpenseAmount(rs.getLong("expenseAmount"));
+                transactionLogging.setCreatedDate(rs.getDate("createdDate"));
+                transactionLogging.setUpdatedDate(rs.getDate("updatedDate"));
+                transactionLogging.setExpensePercentage(Double.parseDouble(df.format((rs.getLong("expenseAmount")/ finalCategoryExpense)*100)));
+                transactionLoggingList.add(transactionLogging);
+            }
+            rs.close();
+            return  transactionLoggingList;
+        });
+    }
+
+    public Double getExpensesSum(String customerId) {
+        SqlParameterSource parameters = new MapSqlParameterSource("customerId", customerId);
+        final String sql =  "select sum(expenseAmount) expenseAmount from customerTransactionLogging where customerId=:customerId and typeOfExpense in ('Shopping','Food','Entertainment','Other')";
+        return template.execute(sql, parameters, ps -> {
+            ResultSet rs = ps.executeQuery();
+            double expenseAmount = 0;
+            while (rs.next()){
+                expenseAmount = rs.getLong("expenseAmount");
+            }
+            rs.close();
+            return expenseAmount;
+        });
+    }
+    public Double getInvestmentsSum(String customerId) {
+        SqlParameterSource parameters = new MapSqlParameterSource("customerId", customerId);
+        final String sql =  "select sum(expenseAmount) expenseAmount from customerTransactionLogging where customerId=:customerId and typeOfExpense not in ('Shopping','Food','Entertainment','Other')";
+        return template.execute(sql, parameters, ps -> {
+            ResultSet rs = ps.executeQuery();
+            double expenseAmount = 0;
+            while (rs.next()){
+                expenseAmount = rs.getLong("expenseAmount");
+            }
+            rs.close();
+            return expenseAmount;
         });
     }
 }

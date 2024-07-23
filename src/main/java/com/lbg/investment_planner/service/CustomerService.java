@@ -1,10 +1,7 @@
 package com.lbg.investment_planner.service;
 
 import com.lbg.investment_planner.dao.CustomerDao;
-import com.lbg.investment_planner.entity.AgeExpenseData;
-import com.lbg.investment_planner.entity.Customer;
-import com.lbg.investment_planner.entity.ExpensesSavings;
-import com.lbg.investment_planner.entity.Goal;
+import com.lbg.investment_planner.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +27,11 @@ public class CustomerService {
     }
 
     public List<Goal> findSuggestions(String customerId) {return customerDao.findSuggestions(customerId);
+    }
+
+    public List<TransactionLogging> getExpensesCategory(String customerId) {return customerDao.getExpensesCategory(customerId);
+    }
+
+    public List<TransactionLogging> getExpensesDetailsOfCategory(String customerId, String expenseCategory) {return customerDao.getExpensesDetailsOfCategory(customerId,expenseCategory);
     }
 }
