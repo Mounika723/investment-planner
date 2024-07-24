@@ -1,49 +1,37 @@
-insert into customer(customerId, customerName , customerAddress,customerEmail) values('1','Jack','USA','jack@gmail.com');
+insert into users (customerid,username,email,password) values ('1234','Mounika','maddineni.mouni@gmail.com','cGFzc3dvcmQ=');
 
-select * from  customerTransactionLogging;
+insert into users (customerid,username,email,password) values ('12345','Mounika1','Mounika1','cGFzc3dvcmQ=');
 
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','10000','Shopping','inorbit','2023-10-10','2023-10-10');
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','15000','Shopping','panthaloons','2023-10-10','2023-10-10');
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','20000','Shopping','mobilestore','2023-10-10','2023-10-10');
+===============================
 
+insert into customer_transaction_logging (ID,Customer_ID,Category,Category_Sub_Type,Category_Vendor,spend_percentage,Amount,created_date,	updated_date,	createdBy,	updatedBy)
+values ('1','	123456789','	Expense','	Shopping','	Myntra','	2','	200','	24-07-2024','	24-07-2024','	user','	user'),
+('2','123456789','Expense','Shopping','Amazon','3','300','24-07-2024','24-07-2024','user','user'),
+('3','123456789','Expense','Shopping','Flipkart','5','500','24-07-2024','24-07-2024','user','user'),
+('4','123456789','Expense','Entertainment','PVR','20','2000','24-07-2024','24-07-2024','user','user'),
+('5','123456789','Expense','Entertainment','INOX','10','1000','24-07-2024','24-07-2024','user','user'),
+('6','123456789','Expense','Entertainment','NETFLIX','10','1000','24-07-2024','24-07-2024','user','user'),
+('7','123456789','Expense','Food','Zomato','10','1000','24-07-2024','24-07-2024','user','user'),
+('8','123456789','Expense','Food','Swiggy','10','1000','24-07-2024','24-07-2024','user','user'),
+('9','123456789','Expense','Food','Restaurent','10','1000','24-07-2024','24-07-2024','user','user'),
+('10','123456789','Expense','Holiday','MakeMyTrip','20','2000','24-07-2024','24-07-2024','user','user'),
+('11','987654321','Expense','Shopping','Amazon','20','2000','24-07-2024','24-07-2024','user','user'),
+('12','987654321','Expense','Entertainment','Movies','30','3000','24-07-2024','24-07-2024','user','user'),
+('13','987654321','Expense','Food','KFC','20','2000','24-07-2024','24-07-2024','user','user'),
+('14','987654321','Expense','Holiday','Bali','30','3000','24-07-2024','24-07-2024','user','user'),
+('15','123456789','Income','Salary','''','100','20000','24-07-2024','24-07-2024','user','user'),
+('16','987654321','Income','Salary','''','100','40000','24-07-2024','24-07-2024','user','user'),
+('17','123456789','Investment','MutualFunds','''','10','1000','24-07-2024','24-07-2024','user','user'),
+('18','123456789','Investment','Equity','''','40','4000','24-07-2024','24-07-2024','user','user'),
+('19','123456789','Investment','SIP','''','20','2000','24-07-2024','24-07-2024','user','user'),
+('20','123456789','Investment','RetirementPlan','''','10','1000','24-07-2024','24-07-2024','user','user'),
+('21','123456789','Investment','Health','''','10','1000','24-07-2024','24-07-2024','user','user'),
+('22','123456789','Investment','Term','''','10','1000','24-07-2024','24-07-2024','user','user'),
+('23','987654321','Investment','MutualFunds','''','10','3000','24-07-2024','24-07-2024','user','user'),
+('24','987654321','Investment','Equity','''','20','6000','24-07-2024','24-07-2024','user','user'),
+('25','987654321','Investment','SIP','''','20','6000','24-07-2024','24-07-2024','user','user'),
+('26','987654321','Investment','RetirementPlan','''','20','6000','24-07-2024','24-07-2024','user','user'),
+('27','987654321','Investment','Health','''','20','6000','24-07-2024','24-07-2024','user','user'),
+('28','987654321','Investment','Term','''','10','3000','24-07-2024','24-07-2024','user','user')
 
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','1000','food','kfc','2023-10-10','2023-10-10');
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','1000','food','pizzahut','2023-10-10','2023-10-10');
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','2000','food','restaurent','2023-10-10','2023-10-10');
-
-
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','1000','entertinement','theatre','2023-10-10','2023-10-10');
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','500','entertinement','concert','2023-10-10','2023-10-10');
-
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','4500','other','goibibo','2023-10-10','2023-10-10');
-
-select typeOfExpense, sum(expenseAmount) expenseAmount from customerTransactionLogging where customerId='1' group by typeOfExpense;
-
-
-
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','10000','Mutual Funds','Mutual Funds1','2023-10-10','2023-10-10');
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','20000','Mutual Funds','Mutual Funds2','2023-10-10','2023-10-10');
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','25000','Mutual Funds','Mutual Funds3','2023-10-10','2023-10-10');
-
-
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','1000','Equity','Equity1','2023-10-10','2023-10-10');
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','1000','Equity','Equity2','2023-10-10','2023-10-10');
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','2000','Equity','Equity3','2023-10-10','2023-10-10');
-
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','10000','SIP','SIP1','2023-10-10','2023-10-10');
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','15000','SIP','SIP2','2023-10-10','2023-10-10');
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','20000','SIP','SIP3','2023-10-10','2023-10-10');
-
-
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','1000','Retirement Plan','Retirement Plan1','2023-10-10','2023-10-10');
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','1000','Retirement Plan','Retirement Plan2','2023-10-10','2023-10-10');
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','2000','Retirement Plan','Retirement Plan3','2023-10-10','2023-10-10');
-
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','10000','Health','Health','2023-10-10','2023-10-10');
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','15000','Health','Health','2023-10-10','2023-10-10');
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','20000','Health','Health','2023-10-10','2023-10-10');
-
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','10000','Term','Term','2023-10-10','2023-10-10');
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','15000','Term','Term','2023-10-10','2023-10-10');
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','20000','Term','Term','2023-10-10','2023-10-10');
-
+=================================

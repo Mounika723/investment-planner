@@ -2,6 +2,8 @@ package com.lbg.investment_planner.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.User;
@@ -17,25 +19,6 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 public class SecurityConfiguration {
-
-    // User Creation
-    @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder encoder) {
-
-        // InMemoryUserDetailsManager
-        UserDetails admin = User.withUsername("Amiya")
-                .password(encoder.encode("123"))
-                .roles("ADMIN", "USER")
-                .build();
-
-        UserDetails user = User.withUsername("Ejaz")
-                .password(encoder.encode("123"))
-                .roles("USER")
-                .build();
-
-        return new InMemoryUserDetailsManager(admin, user);
-    }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -54,6 +37,11 @@ public class SecurityConfiguration {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+    @Bean
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration configuration) throws Exception {
+        return configuration.getAuthenticationManager();
     }
 
 }

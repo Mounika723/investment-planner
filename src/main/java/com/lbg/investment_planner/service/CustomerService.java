@@ -11,27 +11,8 @@ import java.util.List;
 public class CustomerService {
     @Autowired
     CustomerDao customerDao;
-    public List<Customer> findAll() {
-       return customerDao.findAll();
-    }
-    public Customer findById(String id) {
-        return customerDao.findById(id);
-    }
-    public ExpensesSavings findExpenseById(String id){return  customerDao.findExpensesById(id);}
-    public List<AgeExpenseData> findExpenseByAge(String id){return customerDao.findExpensesByAge(id);}
-    public List<AgeExpenseData> findSavingsByAge(String id){return customerDao.findSavingsByAge(id);}
 
-    public List<AgeExpenseData> findSavingsByIncome(String customerId) {return customerDao.findSavingsByIncome(customerId);    }
-
-    public Goal findGoalSuggestions(String customerId, String goalName) {return customerDao.findGoalSuggestions(customerId,goalName);
+    public List<Expenses> getExpensesCategory(String customerId) {return customerDao.getExpensesCategory(customerId);
     }
-
-    public List<Goal> findSuggestions(String customerId) {return customerDao.findSuggestions(customerId);
-    }
-
-    public List<TransactionLogging> getExpensesCategory(String customerId) {return customerDao.getExpensesCategory(customerId);
-    }
-
-    public List<TransactionLogging> getExpensesDetailsOfCategory(String customerId, String expenseCategory) {return customerDao.getExpensesDetailsOfCategory(customerId,expenseCategory);
-    }
+    public String checkAuthentication(LoginDto loginDto){return customerDao.findByCustomerId(loginDto);}
 }

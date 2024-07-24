@@ -1,46 +1,37 @@
-CREATE TABLE customer
+CREATE TABLE users
 (
- customerName varchar(100) NOT NULL,
- customerId varchar(11) NOT NULL ,
- customerAddress varchar(100) DEFAULT NULL,
- customerEmail varchar(100) DEFAULT NULL,
- PRIMARY KEY (customerId)
+ customerid varchar(11) NOT NULL ,
+ username varchar(255),
+ email varchar(255),
+ password varchar(255)
 );
 
-CREATE TABLE customerTransactionLogging
+CREATE TABLE customer_details
 (
- customerId varchar(11) NOT NULL ,
- expenseAmount numeric(13),
- typeOfExpense varchar(20),
- expenseSubType varchar(255),
- createdDate date,
- updatedDate date
+ id numeric(15) NOT NULL,
+ customer_id varchar(11) NOT NULL ,
+ customer_name varchar(100) NOT NULL,
+ customer_income numeric(25) NOT NULL,
+ customer_age numeric(3) NOT NULL,
+ customer_address varchar(100) DEFAULT NULL,
+ customer_email varchar(100) DEFAULT NULL,
+ created_date date,
+ updated_date date,
+ PRIMARY KEY (customer_id)
 );
 
-CREATE TABLE IF NOT EXISTS public.expenses_savings
+CREATE TABLE customer_transaction_logging
 (
-    customerid character varying(11) COLLATE pg_catalog."default" NOT NULL,
-    expenses character varying(11) COLLATE pg_catalog."default",
-    savings character varying(11) COLLATE pg_catalog."default",
-    age character varying(3) COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT expenses_savings_pkey PRIMARY KEY (customerid)
+ id numeric(15) NOT NULL,
+ customer_id varchar(11) NOT NULL ,
+ category varchar(100) NOT NULL,
+ category_sub_type varchar(100) NOT NULL,
+ category_Vendor varchar(100) NOT NULL,
+ spend_percentage varchar(13),
+ amount numeric(25),
+ created_date date,
+ updated_date date,
+ createdBy varchar(50),
+ updatedBy varchar(50),
+ PRIMARY KEY (id)
 );
-
-CREATE TABLE IF NOT EXISTS public.expensessavings
-(
-    customerid character varying(11) COLLATE pg_catalog."default" NOT NULL,
-    expenses character varying(11) COLLATE pg_catalog."default",
-    savings character varying(11) COLLATE pg_catalog."default",
-    age character varying(3) COLLATE pg_catalog."default" NOT NULL,
-    income character varying(11) COLLATE pg_catalog."default",
-    CONSTRAINT expensessavings_pkey PRIMARY KEY (customerid)
-);
-
-CREATE TABLE IF NOT EXISTS public.goal
-(
-    minincome numeric(13,2),
-    maxincome numeric(13,2),
-    goalname character varying(100) COLLATE pg_catalog."default",
-    suggestions character varying(255) COLLATE pg_catalog."default"
-);
-
