@@ -7,24 +7,6 @@ CREATE TABLE customer
  PRIMARY KEY (customerId)
 );
 
-select * from  customerTransactionLogging;
-
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','10000','Shopping','inorbit','2023-10-10','2023-10-10');
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','15000','Shopping','panthaloons','2023-10-10','2023-10-10');
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','20000','Shopping','mobilestore','2023-10-10','2023-10-10');
-
-
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','1000','food','kfc','2023-10-10','2023-10-10');
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','1000','food','pizzahut','2023-10-10','2023-10-10');
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','2000','food','restaurent','2023-10-10','2023-10-10');
-
-
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','1000','entertinement','theatre','2023-10-10','2023-10-10');
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','500','entertinement','concert','2023-10-10','2023-10-10');
-
-insert into customerTransactionLogging (customerid,expenseamount,typeofexpense,expensesubtype,createddate,updateddate) values ('1','4500','other','goibibo','2023-10-10','2023-10-10');
-
-
 CREATE TABLE customerTransactionLogging
 (
  customerId varchar(11) NOT NULL ,
@@ -34,3 +16,31 @@ CREATE TABLE customerTransactionLogging
  createdDate date,
  updatedDate date
 );
+
+CREATE TABLE IF NOT EXISTS public.expenses_savings
+(
+    customerid character varying(11) COLLATE pg_catalog."default" NOT NULL,
+    expenses character varying(11) COLLATE pg_catalog."default",
+    savings character varying(11) COLLATE pg_catalog."default",
+    age character varying(3) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT expenses_savings_pkey PRIMARY KEY (customerid)
+);
+
+CREATE TABLE IF NOT EXISTS public.expensessavings
+(
+    customerid character varying(11) COLLATE pg_catalog."default" NOT NULL,
+    expenses character varying(11) COLLATE pg_catalog."default",
+    savings character varying(11) COLLATE pg_catalog."default",
+    age character varying(3) COLLATE pg_catalog."default" NOT NULL,
+    income character varying(11) COLLATE pg_catalog."default",
+    CONSTRAINT expensessavings_pkey PRIMARY KEY (customerid)
+);
+
+CREATE TABLE IF NOT EXISTS public.goal
+(
+    minincome numeric(13,2),
+    maxincome numeric(13,2),
+    goalname character varying(100) COLLATE pg_catalog."default",
+    suggestions character varying(255) COLLATE pg_catalog."default"
+);
+
