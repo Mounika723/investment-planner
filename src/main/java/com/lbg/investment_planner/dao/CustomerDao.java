@@ -14,4 +14,8 @@ public interface CustomerDao {
     List<Trends> getInvestmentsCategory(String customerId);
 
     List<JsonNode> getDetailsByCategory(String customerId);
+
+    List<JsonNode>  getOverallTrends(String customerId);
+
+    List<JsonNode> getOverallTrendsByIncome(String customerId);
 }

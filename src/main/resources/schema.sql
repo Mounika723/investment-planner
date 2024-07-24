@@ -52,3 +52,22 @@ CREATE TABLE customer_trends
  updatedBy varchar(50),
  PRIMARY KEY (id)
 );
+
+
+
+CREATE TABLE overall_trends
+(
+ id numeric(15) NOT NULL,
+ age_range_from numeric(3) NOT NULL,
+ age_range_to numeric(3) NOT NULL,
+ income_range_from numeric(25) NOT NULL,
+ income_range_to numeric(25) NOT NULL,
+  category varchar(100) NOT NULL,
+ category_sub_type varchar(100) NOT NULL,
+ spend_percentage varchar(13),
+ created_date date,
+ updated_date date,
+ createdBy varchar(50),
+ updatedBy varchar(50),
+ PRIMARY KEY (id)
+);

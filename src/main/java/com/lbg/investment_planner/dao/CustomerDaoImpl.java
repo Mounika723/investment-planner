@@ -139,4 +139,130 @@ public class CustomerDaoImpl implements CustomerDao {
             return jsonNodeList;
         });
     }
+
+    @Override
+    public List<JsonNode> getOverallTrends(String customerId) {
+        int age = getAgeOfCustomer(customerId);
+        SqlParameterSource parameters = new MapSqlParameterSource("age", age);
+        final String sql = "select Category_Sub_Type, spend_percentage  from overall_trends where age_range_from<=:age and age_range_to>=:age";
+        return template.execute(sql,parameters, ps -> {
+            ResultSet rs = ps.executeQuery();
+            List<Trends> trendsListExpenses = new ArrayList<>();
+            List<Trends> trendsListInvestments = new ArrayList<>();
+            List<String> expenseCategories = List.of("Shopping","Entertainment","Food","Holiday");
+            List<String> investCategories = List.of("Mutual Funds","Equity","SIP","Retirement Plan","Health","Term");
+            while (rs.next()){
+                if(expenseCategories.contains(rs.getString("Category_Sub_Type"))){
+                    Trends trends = new Trends();
+                    trends.setId(String.valueOf(rs.getRow()));
+                    trends.setLabel(rs.getString("Category_Sub_Type"));
+                    trends.setValue(rs.getString("spend_percentage"));
+                    trendsListExpenses.add(trends);}
+                else if(investCategories.contains(rs.getString("Category_Sub_Type"))){
+                    Trends trends1 = new Trends();
+                    trends1.setId(String.valueOf(rs.getRow()));
+                    trends1.setLabel(rs.getString("Category_Sub_Type"));
+                    trends1.setValue(rs.getString("spend_percentage"));
+                    trendsListInvestments.add(trends1);
+                }
+            }
+            rs.close();
+            List<JsonNode> jsonNodeList= new ArrayList<>();
+            ObjectMapper mapper = new ObjectMapper();
+
+            JsonNode array = null;
+            JsonNode array1 = null;
+            JsonNode array2 = null;
+            try {
+                String list1 = mapper.writeValueAsString(trendsListExpenses);
+                String list2 = mapper.writeValueAsString(trendsListInvestments);
+                array = mapper.readTree(list1);
+                array1 = mapper.readTree(list2);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+            JsonNode result = mapper.createObjectNode().set("expenses",array);
+            JsonNode resultInvestments = mapper.createObjectNode().set("investments",array1);
+            jsonNodeList.add(result);
+            jsonNodeList.add(resultInvestments);
+            return jsonNodeList;
+        });
+    }
+
+    @Override
+    public List<JsonNode> getOverallTrendsByIncome(String customerId) {
+        double income = getIncomeOfCusomer(customerId);
+        SqlParameterSource parameters = new MapSqlParameterSource("income", income);
+        final String sql = "select Category_Sub_Type, spend_percentage  from overall_trends where income_range_from<=:income and income_range_to>=:income";
+        return template.execute(sql,parameters, ps -> {
+            ResultSet rs = ps.executeQuery();
+            List<Trends> trendsListExpenses = new ArrayList<>();
+            List<Trends> trendsListInvestments = new ArrayList<>();
+            List<String> expenseCategories = List.of("Shopping","Entertainment","Food","Holiday");
+            List<String> investCategories = List.of("Mutual Funds","Equity","SIP","Retirement Plan","Health","Term");
+            while (rs.next()){
+                if(expenseCategories.contains(rs.getString("Category_Sub_Type"))){
+                    Trends trends = new Trends();
+                    trends.setId(String.valueOf(rs.getRow()));
+                    trends.setLabel(rs.getString("Category_Sub_Type"));
+                    trends.setValue(rs.getString("spend_percentage"));
+                    trendsListExpenses.add(trends);}
+                else if(investCategories.contains(rs.getString("Category_Sub_Type"))){
+                    Trends trends1 = new Trends();
+                    trends1.setId(String.valueOf(rs.getRow()));
+                    trends1.setLabel(rs.getString("Category_Sub_Type"));
+                    trends1.setValue(rs.getString("spend_percentage"));
+                    trendsListInvestments.add(trends1);
+                }
+            }
+            rs.close();
+            List<JsonNode> jsonNodeList= new ArrayList<>();
+            ObjectMapper mapper = new ObjectMapper();
+
+            JsonNode array = null;
+            JsonNode array1 = null;
+            JsonNode array2 = null;
+            try {
+                String list1 = mapper.writeValueAsString(trendsListExpenses);
+                String list2 = mapper.writeValueAsString(trendsListInvestments);
+                array = mapper.readTree(list1);
+                array1 = mapper.readTree(list2);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+            JsonNode result = mapper.createObjectNode().set("expenses",array);
+            JsonNode resultInvestments = mapper.createObjectNode().set("investments",array1);
+            jsonNodeList.add(result);
+            jsonNodeList.add(resultInvestments);
+            return jsonNodeList;
+        });
+    }
+
+    private Integer getIncomeOfCusomer(String customerId) {
+        SqlParameterSource parameters = new MapSqlParameterSource("customerId", customerId);
+        final String sql = "select customer_income  from customer_details where customer_id=:customerId";
+        return template.execute(sql,parameters, ps -> {
+            ResultSet rs = ps.executeQuery();
+            int age = 0;
+            while (rs.next()){
+                age = rs.getInt(1);
+            }
+            rs.close();
+            return age;
+        });
+    }
+
+    public int getAgeOfCustomer(String customerId) {
+        SqlParameterSource parameters = new MapSqlParameterSource("customerId", customerId);
+        final String sql = "select customer_age  from customer_details where customer_id=:customerId";
+        return template.execute(sql,parameters, ps -> {
+            ResultSet rs = ps.executeQuery();
+            int age = 0;
+            while (rs.next()){
+               age = rs.getInt(1);
+            }
+            rs.close();
+            return age;
+        });
+    }
 }

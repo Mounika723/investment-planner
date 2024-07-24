@@ -22,4 +22,10 @@ public class CustomerService {
 
     public List<JsonNode> getDetailsByCategory(String customerId) {return customerDao.getDetailsByCategory(customerId);
     }
+
+    public List<JsonNode>  getOverallTrends(String customerId) {return customerDao.getOverallTrends(customerId);
+    }
+
+    public List<JsonNode> getOverallTrendsByIncome(String customerId) {return customerDao.getOverallTrendsByIncome(customerId);
+    }
 }
