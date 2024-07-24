@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Expenses {
+public class Trends {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;

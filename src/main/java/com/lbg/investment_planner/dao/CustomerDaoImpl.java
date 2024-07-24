@@ -1,6 +1,5 @@
 package com.lbg.investment_planner.dao;
 
-import com.lbg.investment_planner.dao.mapper.CustomerDaoMapper;
 import com.lbg.investment_planner.model.*;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -8,7 +7,6 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,23 +18,23 @@ public class CustomerDaoImpl implements CustomerDao {
     NamedParameterJdbcTemplate template;
 
     @Override
-    public List<Expenses> getExpensesCategory(String customerId) {
+    public List<Trends> getExpensesCategory(String customerId) {
         SqlParameterSource parameters = new MapSqlParameterSource("customerId", customerId);
         final String sql = "select Category_Sub_Type, sum(spend_percentage) expense_percentage from customer_transaction_logging where customer_id=:customerId and Category_Sub_Type in ('Shopping','Entertainment','Food','Holiday') group by Category_Sub_Type";
         return template.execute(sql, parameters, ps -> {
             ResultSet rs = ps.executeQuery();
-            List<Expenses> expensesList = new ArrayList<>();
+            List<Trends> trendsList = new ArrayList<>();
             while (rs.next()){
-                Expenses expenses = new Expenses();
-                expenses.setId(String.valueOf(rs.getRow()));
-                expenses.setLabel(rs.getString("Category_Sub_Type"));
-                expenses.setValue(rs.getString("expense_percentage"));
-                expensesList.add(expenses);
+                Trends trends = new Trends();
+                trends.setId(String.valueOf(rs.getRow()));
+                trends.setLabel(rs.getString("Category_Sub_Type"));
+                trends.setValue(rs.getString("expense_percentage"));
+                trendsList.add(trends);
                }
 
 
             rs.close();
-            return  expensesList;
+            return trendsList;
         });
     }
 
@@ -60,30 +58,22 @@ public class CustomerDaoImpl implements CustomerDao {
         });
     }
 
-    public Double getExpensesSum(String customerId) {
+    @Override
+    public List<Trends> getInvestmentsCategory(String customerId) {
         SqlParameterSource parameters = new MapSqlParameterSource("customerId", customerId);
-        final String sql =  "select sum(expenseAmount) expenseAmount from customerTransactionLogging where customerId=:customerId and typeOfExpense in ('Shopping','Food','Entertainment','Other')";
+        final String sql = "select Category_Sub_Type, sum(spend_percentage) expense_percentage from customer_transaction_logging where customer_id=:customerId and Category_Sub_Type in ('MutualFunds','Equity','SIP','RetirementPlan','Health','Term') group by Category_Sub_Type";
         return template.execute(sql, parameters, ps -> {
             ResultSet rs = ps.executeQuery();
-            double expenseAmount = 0;
+            List<Trends> trendsList = new ArrayList<>();
             while (rs.next()){
-                expenseAmount = rs.getLong("expenseAmount");
+                Trends trends = new Trends();
+                trends.setId(String.valueOf(rs.getRow()));
+                trends.setLabel(rs.getString("Category_Sub_Type"));
+                trends.setValue(rs.getString("expense_percentage"));
+                trendsList.add(trends);
             }
             rs.close();
-            return expenseAmount;
-        });
-    }
-    public Double getInvestmentsSum(String customerId) {
-        SqlParameterSource parameters = new MapSqlParameterSource("customerId", customerId);
-        final String sql =  "select sum(expenseAmount) expenseAmount from customerTransactionLogging where customerId=:customerId and typeOfExpense not in ('Shopping','Food','Entertainment','Other')";
-        return template.execute(sql, parameters, ps -> {
-            ResultSet rs = ps.executeQuery();
-            double expenseAmount = 0;
-            while (rs.next()){
-                expenseAmount = rs.getLong("expenseAmount");
-            }
-            rs.close();
-            return expenseAmount;
+            return trendsList;
         });
     }
 }

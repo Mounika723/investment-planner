@@ -21,7 +21,12 @@ public class CustomerController {
     }
 
     @GetMapping("expensesCategory/{customerId}")
-    public List<Expenses> getExpensesType(@PathVariable String customerId) {
+    public List<Trends> getExpensesType(@PathVariable String customerId) {
         return customerService.getExpensesCategory(customerId);
+    }
+
+    @GetMapping("investmentsCategory/{customerId}")
+    public List<Trends> getInvestmentsByCategory(@PathVariable String customerId) {
+        return customerService.getInvestmentsCategory(customerId);
     }
 }

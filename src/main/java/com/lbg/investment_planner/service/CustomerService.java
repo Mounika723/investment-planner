@@ -12,7 +12,10 @@ public class CustomerService {
     @Autowired
     CustomerDao customerDao;
 
-    public List<Expenses> getExpensesCategory(String customerId) {return customerDao.getExpensesCategory(customerId);
+    public List<Trends> getExpensesCategory(String customerId) {return customerDao.getExpensesCategory(customerId);
     }
     public String checkAuthentication(LoginDto loginDto){return customerDao.findByCustomerId(loginDto);}
+
+    public List<Trends> getInvestmentsCategory(String customerId) {return customerDao.getInvestmentsCategory(customerId);
+    }
 }
