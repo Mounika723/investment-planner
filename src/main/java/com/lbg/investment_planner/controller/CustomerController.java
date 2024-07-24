@@ -1,5 +1,6 @@
 package com.lbg.investment_planner.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.lbg.investment_planner.model.*;
 import jakarta.annotation.Resource;
 import org.springframework.http.ResponseEntity;
@@ -28,5 +29,11 @@ public class CustomerController {
     @GetMapping("investmentsCategory/{customerId}")
     public List<Trends> getInvestmentsByCategory(@PathVariable String customerId) {
         return customerService.getInvestmentsCategory(customerId);
+    }
+
+
+    @GetMapping("trends/{customerId}")
+    public List<JsonNode> getDetailsByCategory(@PathVariable String customerId) {
+        return customerService.getDetailsByCategory(customerId);
     }
 }

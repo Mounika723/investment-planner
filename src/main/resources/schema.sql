@@ -35,3 +35,20 @@ CREATE TABLE customer_transaction_logging
  updatedBy varchar(50),
  PRIMARY KEY (id)
 );
+
+
+
+CREATE TABLE customer_trends
+(
+ id numeric(15) NOT NULL,
+ customer_id varchar(11) NOT NULL ,
+ category varchar(100) NOT NULL,
+ category_sub_type varchar(100) NOT NULL,
+ spend_percentage varchar(13),
+ spend_amount numeric(25),
+ created_date date,
+ updated_date date,
+ createdBy varchar(50),
+ updatedBy varchar(50),
+ PRIMARY KEY (id)
+);
