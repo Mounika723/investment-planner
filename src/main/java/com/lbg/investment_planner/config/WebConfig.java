@@ -10,7 +10,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // or specify a more specific path
-                .allowedOrigins("http://localhost:5173") // allows only requests from this origin
+                .allowedOrigins("https://banking-empowerment-qfv5rs5xfa-uc.a.run.app") // allows only requests from this origin
                 .allowedMethods("GET", "POST", "PUT", "DELETE"); // specify the allowed methods
     }
 }
