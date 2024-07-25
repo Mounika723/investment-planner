@@ -35,12 +35,14 @@ public class CustomerController {
     public List<Trends> getDetailsByCategory(@PathVariable String customerId,@PathVariable String category) {
         return customerService.getDetailsByCategory(customerId,category);
     }
-    @GetMapping("overallTrendsByAge/{customerId}")
-    public List<JsonNode>  getOverallTrendsByAge(@PathVariable String customerId) {
-        return customerService.getOverallTrends(customerId);
-    }
-    @GetMapping("overallTrendsByIncome/{customerId}")
-    public List<JsonNode>  getOverallTrendsByIncome(@PathVariable String customerId) {
-        return customerService.getOverallTrendsByIncome(customerId);
+    @GetMapping("overallTrends/{customerId}/{type}/{category}")
+    public List<Trends>  getOverallTrends(@PathVariable String customerId,@PathVariable String type,@PathVariable String category) {
+        if("Age".equalsIgnoreCase(type)) {
+            return customerService.getOverallTrends(customerId,category);
+        } else if ("Salary".equalsIgnoreCase(type)){
+            return customerService.getOverallTrendsByIncome(customerId,category);
+        } else {
+            return customerService.getOverallTrendsByIncome(customerId,category);
+        }
     }
 }

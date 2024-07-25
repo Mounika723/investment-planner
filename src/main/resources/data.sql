@@ -1,6 +1,6 @@
-insert into users (customerid,username,email,password) values ('1234','Mounika','maddineni.mouni@gmail.com','cGFzc3dvcmQ=');
+insert into users (customerid,username,email,password) values ('123456789','Mounika','maddineni.mouni@gmail.com','cGFzc3dvcmQ=');
 
-insert into users (customerid,username,email,password) values ('12345','Mounika1','Mounika1','cGFzc3dvcmQ=');
+insert into users (customerid,username,email,password) values ('987654321','Mounika1','Mounika1','cGFzc3dvcmQ=');
 
 ===============================
 
@@ -76,4 +76,19 @@ insert into overall_trends (ID,	age_range_from,	age_range_to,	income_range_from,
 ('7','18','25','10000','20000','Investment','SIP','20'),
 ('8','18','25','10000','20000','Investment','Retirement Plan','5'),
 ('9','18','25','10000','20000','Investment','Health','5'),
-('10','18','25','10000','20000','Investment','Term','5')
+('10','18','25','10000','20000','Investment','Term','5');
+
+insert into overall_trends (ID,	age_range_from,	age_range_to,	income_range_from,	income_range_to,	category,	category_sub_type,	spend_percentage) values
+
+('11','18','25','10000','20000','Expenditure','Total Income','100'),
+('12','18','25','10000','20000','Expenditure','Expenses','30'),
+('13','18','25','10000','20000','Expenditure','Investment','70');
+
+=========================================================
+insert into invest_guide (id , grow_percentage_from,
+ grow_percentage_to ,
+ risk_category  ,
+ investment_suggestion)values ('1',	'0',	'5'	,'Low',	'100% Fixed Deposit'),
+('2',	'6',	'8'	,'Low',	'70% Fixed Deposit and 30 %  Government Bond')
+
+===============================================

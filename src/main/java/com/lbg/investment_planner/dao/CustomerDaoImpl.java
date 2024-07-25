@@ -128,16 +128,18 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public List<JsonNode> getOverallTrends(String customerId) {
+    public List<Trends> getOverallTrends(String customerId,String category) {
         int age = getAgeOfCustomer(customerId);
-        SqlParameterSource parameters = new MapSqlParameterSource("age", age);
-        final String sql = "select Category_Sub_Type, spend_percentage  from overall_trends where age_range_from<=:age and age_range_to>=:age";
+        SqlParameterSource parameters = new MapSqlParameterSource().addValue("age", age).addValue("category",category);
+        final String sql = "select Category_Sub_Type, spend_percentage  from overall_trends where age_range_from<=:age and age_range_to>=:age and category= :category";
         return template.execute(sql,parameters, ps -> {
             ResultSet rs = ps.executeQuery();
             List<Trends> trendsListExpenses = new ArrayList<>();
             List<Trends> trendsListInvestments = new ArrayList<>();
+            List<Trends> trendsListExpenditure = new ArrayList<>();
             List<String> expenseCategories = List.of("Shopping","Entertainment","Food","Holiday");
             List<String> investCategories = List.of("Mutual Funds","Equity","SIP","Retirement Plan","Health","Term");
+            List<String> expenditureCategories = List.of("Total Income","Expenses","Investment");
             while (rs.next()){
                 if(expenseCategories.contains(rs.getString("Category_Sub_Type"))){
                     Trends trends = new Trends();
@@ -151,36 +153,30 @@ public class CustomerDaoImpl implements CustomerDao {
                     trends1.setLabel(rs.getString("Category_Sub_Type"));
                     trends1.setValue(rs.getString("spend_percentage"));
                     trendsListInvestments.add(trends1);
+                } else if(expenditureCategories.contains(rs.getString("Category_Sub_Type"))){
+                    Trends trends1 = new Trends();
+                    trends1.setId(String.valueOf(rs.getRow()));
+                    trends1.setLabel(rs.getString("Category_Sub_Type"));
+                    trends1.setValue(rs.getString("spend_percentage"));
+                    trendsListExpenditure.add(trends1);
                 }
             }
             rs.close();
-            List<JsonNode> jsonNodeList= new ArrayList<>();
-            ObjectMapper mapper = new ObjectMapper();
-
-            JsonNode array = null;
-            JsonNode array1 = null;
-            JsonNode array2 = null;
-            try {
-                String list1 = mapper.writeValueAsString(trendsListExpenses);
-                String list2 = mapper.writeValueAsString(trendsListInvestments);
-                array = mapper.readTree(list1);
-                array1 = mapper.readTree(list2);
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
+            if("Expense".equalsIgnoreCase(category)) {
+                return trendsListExpenses;
+            } else if("Investment".equalsIgnoreCase(category)) {
+                return trendsListInvestments;
+            } else {
+                return trendsListExpenditure;
             }
-            JsonNode result = mapper.createObjectNode().set("expenses",array);
-            JsonNode resultInvestments = mapper.createObjectNode().set("investments",array1);
-            jsonNodeList.add(result);
-            jsonNodeList.add(resultInvestments);
-            return jsonNodeList;
         });
     }
 
     @Override
-    public List<JsonNode> getOverallTrendsByIncome(String customerId) {
+    public List<Trends> getOverallTrendsByIncome(String customerId,String category) {
         double income = getIncomeOfCusomer(customerId);
-        SqlParameterSource parameters = new MapSqlParameterSource("income", income);
-        final String sql = "select Category_Sub_Type, spend_percentage  from overall_trends where income_range_from<=:income and income_range_to>=:income";
+        SqlParameterSource parameters = new MapSqlParameterSource().addValue("income", income).addValue("category",category);
+        final String sql = "select Category_Sub_Type, spend_percentage  from overall_trends where income_range_from<=:income and income_range_to>=:income and category= :category";
         return template.execute(sql,parameters, ps -> {
             ResultSet rs = ps.executeQuery();
             List<Trends> trendsListExpenses = new ArrayList<>();
@@ -203,25 +199,13 @@ public class CustomerDaoImpl implements CustomerDao {
                 }
             }
             rs.close();
-            List<JsonNode> jsonNodeList= new ArrayList<>();
-            ObjectMapper mapper = new ObjectMapper();
-
-            JsonNode array = null;
-            JsonNode array1 = null;
-            JsonNode array2 = null;
-            try {
-                String list1 = mapper.writeValueAsString(trendsListExpenses);
-                String list2 = mapper.writeValueAsString(trendsListInvestments);
-                array = mapper.readTree(list1);
-                array1 = mapper.readTree(list2);
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
+            if("Expense".equalsIgnoreCase(category)) {
+                return trendsListExpenses;
+            } else if("Investment".equalsIgnoreCase(category)) {
+                return trendsListInvestments;
+            } else {
+                return null;
             }
-            JsonNode result = mapper.createObjectNode().set("expenses",array);
-            JsonNode resultInvestments = mapper.createObjectNode().set("investments",array1);
-            jsonNodeList.add(result);
-            jsonNodeList.add(resultInvestments);
-            return jsonNodeList;
         });
     }
 

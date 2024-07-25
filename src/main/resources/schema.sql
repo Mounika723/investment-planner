@@ -71,3 +71,17 @@ CREATE TABLE overall_trends
  updatedBy varchar(50),
  PRIMARY KEY (id)
 );
+
+
+CREATE TABLE invest_guide
+(
+ id numeric(15) NOT NULL,
+ grow_percentage_from numeric(3) NOT NULL,
+ grow_percentage_to numeric(3) NOT NULL,
+ risk_category varchar(25) NOT NULL ,
+ investment_suggestion varchar(255) NOT NULL,
+ created_date date,
+ updated_date date,
+ createdBy varchar(25),
+ updatedBy varchar(25)
+);
