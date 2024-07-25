@@ -15,7 +15,7 @@ public class CustomerService {
 
     public List<Trends> getExpensesCategory(String customerId) {return customerDao.getExpensesCategory(customerId);
     }
-    public String checkAuthentication(LoginDto loginDto){return customerDao.findByCustomerId(loginDto);}
+    public LoginDto checkAuthentication(LoginDto loginDto){return customerDao.findByCustomerId(loginDto);}
 
     public List<Trends> getInvestmentsCategory(String customerId) {return customerDao.getInvestmentsCategory(customerId);
     }

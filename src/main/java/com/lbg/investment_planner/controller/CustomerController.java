@@ -16,8 +16,8 @@ public class CustomerController {
     CustomerService customerService;
 
     @PostMapping(value = {"/login", "/signin"})
-    public ResponseEntity<String> login(@RequestBody LoginDto loginDto){
-        String validation = customerService.checkAuthentication(loginDto);
+    public ResponseEntity<LoginDto> login(@RequestBody LoginDto loginDto){
+        LoginDto validation = customerService.checkAuthentication(loginDto);
         return ResponseEntity.ok(validation);
     }
 

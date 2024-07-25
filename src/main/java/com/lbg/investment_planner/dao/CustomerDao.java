@@ -9,7 +9,7 @@ import java.util.List;
 public interface CustomerDao {
        List<Trends> getExpensesCategory(String customerId);
 
-    String findByCustomerId(LoginDto loginDto);
+    LoginDto findByCustomerId(LoginDto loginDto);
 
     List<Trends> getInvestmentsCategory(String customerId);
 

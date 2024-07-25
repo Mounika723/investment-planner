@@ -43,21 +43,23 @@ public class CustomerDaoImpl implements CustomerDao {
 
 
     @Override
-    public String findByCustomerId(LoginDto loginDto) {
+    public LoginDto findByCustomerId(LoginDto loginDto) {
         SqlParameterSource parameters = new MapSqlParameterSource("customerId", loginDto.getCustomerId());
         final String sql = "select password from users where customerid=:customerId";
         return template.execute(sql, parameters, ps -> {
             ResultSet rs = ps.executeQuery();
-            String output = "Unauthorized";
+            LoginDto response = new LoginDto();
+            response.setCustomerId(loginDto.getCustomerId());
+            response.setAuthentication("Unauthorized");
             String decodedPassword = "";
             while (rs.next()) {
                 decodedPassword = new String(java.util.Base64.getDecoder().decode(rs.getString("password")));
                 if (loginDto.getPassword().equalsIgnoreCase(decodedPassword)) {
-                    output = loginDto.getCustomerId();
+                    response.setAuthentication("Success");
                 }
             }
             rs.close();
-            return output;
+            return response;
         });
     }
 
