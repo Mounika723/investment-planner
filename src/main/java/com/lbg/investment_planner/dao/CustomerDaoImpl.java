@@ -1,8 +1,5 @@
 package com.lbg.investment_planner.dao;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lbg.investment_planner.model.*;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -235,6 +232,23 @@ public class CustomerDaoImpl implements CustomerDao {
             rs.close();
             return subCategoryDetailsList;
 
+        });
+    }
+
+    @Override
+    public InvestmentSuggestions getSuggestionsByGrowPercentage(Integer growPercentage) {
+        SqlParameterSource parameters = new MapSqlParameterSource("growPercentage", growPercentage);
+        final String sql = "select risk_category,investment_suggestion from invest_guide where grow_percentage_from<=:growPercentage and grow_percentage_to>=:growPercentage";
+        return template.execute(sql,parameters, ps -> {
+            ResultSet rs = ps.executeQuery();
+            InvestmentSuggestions investmentSuggestions = new InvestmentSuggestions();
+            while (rs.next()){
+                investmentSuggestions.setId(String.valueOf(rs.getRow()));
+                investmentSuggestions.setRiskCategory(rs.getString("risk_category"));
+                investmentSuggestions.setInvestmentSuggestions(rs.getString("investment_suggestion"));
+            }
+            rs.close();
+            return investmentSuggestions;
         });
     }
 

@@ -51,4 +51,8 @@ public class CustomerController {
             return customerService.getOverallTrendsByAgeIncome(customerId,category);
         }
     }
+    @GetMapping("investment/{growPercentage}")
+    public InvestmentSuggestions getSuggestionsByGrowPercentage(@PathVariable Integer growPercentage) {
+        return customerService.getSuggestionsByGrowPercentage(growPercentage);
+    }
 }

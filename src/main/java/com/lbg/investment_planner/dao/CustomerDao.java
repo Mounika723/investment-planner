@@ -1,6 +1,6 @@
 package com.lbg.investment_planner.dao;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import com.lbg.investment_planner.model.InvestmentSuggestions;
 import com.lbg.investment_planner.model.SubCategoryDetails;
 import com.lbg.investment_planner.model.Trends;
 import com.lbg.investment_planner.model.LoginDto;
@@ -23,4 +23,6 @@ public interface CustomerDao {
     List<Trends> getOverallTrendsByAgeIncome(String customerId,String category);
 
     List<SubCategoryDetails> getDetailsByCategorySubCategory(String customerId, String category, String subCategory);
+
+    InvestmentSuggestions getSuggestionsByGrowPercentage(Integer growPercentage);
 }
