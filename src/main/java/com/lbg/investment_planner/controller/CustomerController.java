@@ -20,16 +20,6 @@ public class CustomerController {
         return ResponseEntity.ok(validation);
     }
 
-    @GetMapping("expensesCategory/{customerId}")
-    public List<Trends> getExpensesType(@PathVariable String customerId) {
-        return customerService.getExpensesCategory(customerId);
-    }
-
-    @GetMapping("investmentsCategory/{customerId}")
-    public List<Trends> getInvestmentsByCategory(@PathVariable String customerId) {
-        return customerService.getInvestmentsCategory(customerId);
-    }
-
     @GetMapping("trends/{customerId}/{category}")
     public List<Trends> getDetailsByCategory(@PathVariable String customerId,@PathVariable String category) {
         return customerService.getDetailsByCategory(customerId,category);

@@ -8,11 +8,8 @@ import com.lbg.investment_planner.model.LoginDto;
 import java.util.List;
 
 public interface CustomerDao {
-       List<Trends> getExpensesCategory(String customerId);
 
     LoginDto findByCustomerId(LoginDto loginDto);
-
-    List<Trends> getInvestmentsCategory(String customerId);
 
     List<Trends> getDetailsByCategory(String customerId,String category);
 

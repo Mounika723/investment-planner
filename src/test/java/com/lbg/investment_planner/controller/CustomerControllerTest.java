@@ -1,5 +1,7 @@
 package com.lbg.investment_planner.controller;
 
+import com.lbg.investment_planner.model.InvestmentSuggestions;
+import com.lbg.investment_planner.model.LoginDto;
 import com.lbg.investment_planner.model.SubCategoryDetails;
 import com.lbg.investment_planner.model.Trends;
 import com.lbg.investment_planner.service.CustomerService;
@@ -22,19 +24,6 @@ public class CustomerControllerTest {
     CustomerController customerController;
 
     @Test
-    void getExpensesTypeTest(){
-        List<Trends> trendsList = new ArrayList<>();
-        Mockito.when(customerService.getExpensesCategory(Mockito.anyString())).thenReturn(trendsList);
-        Assertions.assertNotNull(customerController.getExpensesType("123456789"));
-    }
-
-    @Test
-    void getInvestmentsByCategoryTest(){
-        List<Trends> trendsList = new ArrayList<>();
-        Mockito.when(customerService.getInvestmentsCategory(Mockito.anyString())).thenReturn(trendsList);
-        Assertions.assertNotNull(customerController.getInvestmentsByCategory("123456789"));
-    }
-    @Test
     void getDetailsByCategoryTest(){
         List<Trends> trendsList = new ArrayList<>();
         Mockito.when(customerService.getDetailsByCategory(Mockito.anyString(),Mockito.anyString())).thenReturn(trendsList);
@@ -49,6 +38,32 @@ public class CustomerControllerTest {
     }
     @Test
     void getOverallTrendsTest(){
-        Assertions.assertNotNull(customerController.getOverallTrends("123456789","Expense","Age"));
+        Assertions.assertNotNull(customerController.getOverallTrends("123456789","Age","Expense"));
+    }
+    @Test
+    void getOverallTrendsSalaryTest(){
+        Assertions.assertNotNull(customerController.getOverallTrends("123456789","Salary","Expense"));
+    }
+    @Test
+    void getOverallTrendsExpenditureTest(){
+        Assertions.assertNotNull(customerController.getOverallTrends("123456789","Expenditure","Expense"));
+    }
+    @Test
+    void loginTest(){
+        LoginDto loginDto = new LoginDto();
+        loginDto.setCustomerId("1234");
+        loginDto.setPassword("password");
+        loginDto.setAuthentication("Success");
+        Mockito.when(customerService.checkAuthentication(Mockito.any())).thenReturn(loginDto);
+        Assertions.assertEquals(loginDto.getAuthentication(),customerController.login(loginDto).getBody().getAuthentication());
+    }
+    @Test
+    void getSuggestionsByGrowPercentageTest(){
+        InvestmentSuggestions investmentSuggestions = new InvestmentSuggestions();
+        investmentSuggestions.setId("1");
+        investmentSuggestions.setRiskCategory("Low");
+        investmentSuggestions.setInvestmentSuggestions("Fixed Deposit");
+        Mockito.when(customerService.getSuggestionsByGrowPercentage(Mockito.any())).thenReturn(investmentSuggestions);
+        Assertions.assertEquals(investmentSuggestions.getInvestmentSuggestions(),customerController.getSuggestionsByGrowPercentage(5).getInvestmentSuggestions());
     }
 }

@@ -18,28 +18,6 @@ public class CustomerDaoImpl implements CustomerDao {
     NamedParameterJdbcTemplate template;
 
     @Override
-    public List<Trends> getExpensesCategory(String customerId) {
-        SqlParameterSource parameters = new MapSqlParameterSource("customerId", customerId);
-        final String sql = "select Category_Sub_Type, sum(spend_percentage) expense_percentage from customer_transaction_logging where customer_id=:customerId and Category_Sub_Type in ('Shopping','Entertainment','Food','Holiday') group by Category_Sub_Type";
-        return template.execute(sql, parameters, ps -> {
-            ResultSet rs = ps.executeQuery();
-            List<Trends> trendsList = new ArrayList<>();
-            while (rs.next()){
-                Trends trends = new Trends();
-                trends.setId(String.valueOf(rs.getRow()));
-                trends.setLabel(rs.getString("Category_Sub_Type"));
-                trends.setValue(rs.getString("expense_percentage"));
-                trendsList.add(trends);
-               }
-
-
-            rs.close();
-            return trendsList;
-        });
-    }
-
-
-    @Override
     public LoginDto findByCustomerId(LoginDto loginDto) {
         SqlParameterSource parameters = new MapSqlParameterSource("customerId", loginDto.getCustomerId());
         final String sql = "select password from users where customerid=:customerId";
@@ -57,25 +35,6 @@ public class CustomerDaoImpl implements CustomerDao {
             }
             rs.close();
             return response;
-        });
-    }
-
-    @Override
-    public List<Trends> getInvestmentsCategory(String customerId) {
-        SqlParameterSource parameters = new MapSqlParameterSource("customerId", customerId);
-        final String sql = "select Category_Sub_Type, sum(spend_percentage) expense_percentage from customer_transaction_logging where customer_id=:customerId and Category_Sub_Type in ('MutualFunds','Equity','SIP','RetirementPlan','Health','Term') group by Category_Sub_Type";
-        return template.execute(sql, parameters, ps -> {
-            ResultSet rs = ps.executeQuery();
-            List<Trends> trendsList = new ArrayList<>();
-            while (rs.next()){
-                Trends trends = new Trends();
-                trends.setId(String.valueOf(rs.getRow()));
-                trends.setLabel(rs.getString("Category_Sub_Type"));
-                trends.setValue(rs.getString("expense_percentage"));
-                trendsList.add(trends);
-            }
-            rs.close();
-            return trendsList;
         });
     }
 
