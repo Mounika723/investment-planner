@@ -18,4 +18,6 @@ public interface CustomerDao {
     List<Trends>  getOverallTrends(String customerId,String category);
 
     List<Trends> getOverallTrendsByIncome(String customerId,String category);
+
+    List<Trends> getOverallTrendsByAgeIncome(String customerId,String category);
 }

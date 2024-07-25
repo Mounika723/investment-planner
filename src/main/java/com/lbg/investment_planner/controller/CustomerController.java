@@ -42,7 +42,7 @@ public class CustomerController {
         } else if ("Salary".equalsIgnoreCase(type)){
             return customerService.getOverallTrendsByIncome(customerId,category);
         } else {
-            return customerService.getOverallTrendsByIncome(customerId,category);
+            return customerService.getOverallTrendsByAgeIncome(customerId,category);
         }
     }
 }
