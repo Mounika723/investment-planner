@@ -53,7 +53,7 @@ public class CustomerDaoImpl implements CustomerDao {
             while (rs.next()) {
                 decodedPassword = new String(java.util.Base64.getDecoder().decode(rs.getString("password")));
                 if (loginDto.getPassword().equalsIgnoreCase(decodedPassword)) {
-                    output = "Success";
+                    output = loginDto.getCustomerId();
                 }
             }
             rs.close();
