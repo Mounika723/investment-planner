@@ -209,6 +209,27 @@ public class CustomerDaoImpl implements CustomerDao {
         });
     }
 
+    @Override
+    public List<SubCategoryDetails> getDetailsByCategorySubCategory(String customerId, String category, String subCategory) {
+        SqlParameterSource parameters = new MapSqlParameterSource().addValue("customerId", customerId).addValue("category",category).addValue("subCategory",subCategory);
+        final String sql = "select category_vendor,amount,created_date from customer_transaction_logging where customer_id =:customerId and category=:category and category_sub_type=:subCategory";
+        return template.execute(sql, parameters, ps -> {
+            ResultSet rs = ps.executeQuery();
+            List<SubCategoryDetails> subCategoryDetailsList = new ArrayList<>();
+            while (rs.next()){
+                SubCategoryDetails subCategoryDetails = new SubCategoryDetails();
+                subCategoryDetails.setId(String.valueOf(rs.getRow()));
+                subCategoryDetails.setCategory_vendor(rs.getString("category_vendor"));
+                subCategoryDetails.setAmount(rs.getString("amount"));
+                subCategoryDetails.setCreated_date(rs.getString("created_date"));
+                subCategoryDetailsList.add(subCategoryDetails);
+            }
+            rs.close();
+            return subCategoryDetailsList;
+
+        });
+    }
+
     private Integer getIncomeOfCusomer(String customerId) {
         SqlParameterSource parameters = new MapSqlParameterSource("customerId", customerId);
         final String sql = "select customer_income  from customer_details where customer_id=:customerId";

@@ -35,6 +35,12 @@ public class CustomerController {
     public List<Trends> getDetailsByCategory(@PathVariable String customerId,@PathVariable String category) {
         return customerService.getDetailsByCategory(customerId,category);
     }
+
+    @GetMapping("transactions/{customerId}/{category}/{subcategory}")
+    public List<SubCategoryDetails> getDetailsByCategorySubCategory(@PathVariable String customerId,@PathVariable String category,@PathVariable String subCategory) {
+        return customerService.getDetailsByCategorySubCategory(customerId,category,subCategory);
+    }
+
     @GetMapping("overallTrends/{customerId}/{type}/{category}")
     public List<Trends>  getOverallTrends(@PathVariable String customerId,@PathVariable String type,@PathVariable String category) {
         if("Age".equalsIgnoreCase(type)) {

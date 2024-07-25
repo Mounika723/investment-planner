@@ -29,4 +29,7 @@ public class CustomerService {
 
     public List<Trends> getOverallTrendsByIncome(String customerId,String category) {return customerDao.getOverallTrendsByIncome(customerId,category);
     }
+
+    public List<SubCategoryDetails> getDetailsByCategorySubCategory(String customerId, String category, String subCategory) {return  customerDao.getDetailsByCategorySubCategory(customerId,category,subCategory);
+    }
 }
