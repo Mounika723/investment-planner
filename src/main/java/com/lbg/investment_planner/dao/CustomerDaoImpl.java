@@ -81,9 +81,9 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public List<JsonNode> getDetailsByCategory(String customerId) {
-        SqlParameterSource parameters = new MapSqlParameterSource("customerId", customerId);
-        final String sql = "select Category_Sub_Type, spend_percentage  from customer_trends where customer_id=:customerId";
+    public List<Trends> getDetailsByCategory(String customerId,String category) {
+        SqlParameterSource parameters = new MapSqlParameterSource().addValue("customerId", customerId).addValue("category",category);
+        final String sql = "select Category_Sub_Type, spend_percentage  from customer_trends where customer_id=:customerId and category=:category";
         return template.execute(sql, parameters, ps -> {
             ResultSet rs = ps.executeQuery();
             List<Trends> trendsListExpenses = new ArrayList<>();
@@ -114,29 +114,14 @@ public class CustomerDaoImpl implements CustomerDao {
                 }
             }
             rs.close();
-            List<JsonNode> jsonNodeList= new ArrayList<>();
-            ObjectMapper mapper = new ObjectMapper();
 
-            JsonNode array = null;
-            JsonNode array1 = null;
-            JsonNode array2 = null;
-            try {
-                String list1 = mapper.writeValueAsString(trendsListExpenses);
-                String list2 = mapper.writeValueAsString(trendsListInvestments);
-                String list3 = mapper.writeValueAsString(trendsListExpediture);
-                array = mapper.readTree(list1);
-                array1 = mapper.readTree(list2);
-                array2 = mapper.readTree(list3);
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
+            if("Expense".equalsIgnoreCase(category)) {
+               return trendsListExpenses;
+            } else if("Investment".equalsIgnoreCase(category)) {
+               return trendsListInvestments;
+            }else {
+                return trendsListExpediture;
             }
-            JsonNode result = mapper.createObjectNode().set("expenses",array);
-            JsonNode resultInvestments = mapper.createObjectNode().set("investments",array1);
-            JsonNode resultExpenditure = mapper.createObjectNode().set("expenditure",array2);
-            jsonNodeList.add(result);
-            jsonNodeList.add(resultInvestments);
-            jsonNodeList.add(resultExpenditure);
-            return jsonNodeList;
         });
     }
 

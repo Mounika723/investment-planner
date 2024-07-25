@@ -13,7 +13,7 @@ public interface CustomerDao {
 
     List<Trends> getInvestmentsCategory(String customerId);
 
-    List<JsonNode> getDetailsByCategory(String customerId);
+    List<Trends> getDetailsByCategory(String customerId,String category);
 
     List<JsonNode>  getOverallTrends(String customerId);
 

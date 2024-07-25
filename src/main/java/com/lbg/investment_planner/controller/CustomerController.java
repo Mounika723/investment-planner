@@ -31,10 +31,9 @@ public class CustomerController {
         return customerService.getInvestmentsCategory(customerId);
     }
 
-
-    @GetMapping("trends/{customerId}")
-    public List<JsonNode> getDetailsByCategory(@PathVariable String customerId) {
-        return customerService.getDetailsByCategory(customerId);
+    @GetMapping("trends/{customerId}/{category}")
+    public List<Trends> getDetailsByCategory(@PathVariable String customerId,@PathVariable String category) {
+        return customerService.getDetailsByCategory(customerId,category);
     }
     @GetMapping("overallTrendsByAge/{customerId}")
     public List<JsonNode>  getOverallTrendsByAge(@PathVariable String customerId) {

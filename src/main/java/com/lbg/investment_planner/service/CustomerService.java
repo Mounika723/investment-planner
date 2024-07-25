@@ -20,7 +20,8 @@ public class CustomerService {
     public List<Trends> getInvestmentsCategory(String customerId) {return customerDao.getInvestmentsCategory(customerId);
     }
 
-    public List<JsonNode> getDetailsByCategory(String customerId) {return customerDao.getDetailsByCategory(customerId);
+    public List<Trends> getDetailsByCategory(String customerId,String category) {
+        return customerDao.getDetailsByCategory(customerId,category);
     }
 
     public List<JsonNode>  getOverallTrends(String customerId) {return customerDao.getOverallTrends(customerId);
