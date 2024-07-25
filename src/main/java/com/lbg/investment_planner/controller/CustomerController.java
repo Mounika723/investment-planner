@@ -37,8 +37,8 @@ public class CustomerController {
     }
 
     @GetMapping("transactions/{customerId}/{category}/{subcategory}")
-    public List<SubCategoryDetails> getDetailsByCategorySubCategory(@PathVariable String customerId,@PathVariable String category,@PathVariable String subCategory) {
-        return customerService.getDetailsByCategorySubCategory(customerId,category,subCategory);
+    public List<SubCategoryDetails> getDetailsByCategorySubCategory(@PathVariable String customerId,@PathVariable String category,@PathVariable String subcategory) {
+        return customerService.getDetailsByCategorySubCategory(customerId,category,subcategory);
     }
 
     @GetMapping("overallTrends/{customerId}/{type}/{category}")

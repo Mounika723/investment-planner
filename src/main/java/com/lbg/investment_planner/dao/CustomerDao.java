@@ -1,6 +1,7 @@
 package com.lbg.investment_planner.dao;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.lbg.investment_planner.model.SubCategoryDetails;
 import com.lbg.investment_planner.model.Trends;
 import com.lbg.investment_planner.model.LoginDto;
 
