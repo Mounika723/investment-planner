@@ -1,6 +1,5 @@
 package com.lbg.investment_planner.controller;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.lbg.investment_planner.model.*;
 import jakarta.annotation.Resource;
 import org.springframework.http.ResponseEntity;
