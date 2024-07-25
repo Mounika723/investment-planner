@@ -181,8 +181,10 @@ public class CustomerDaoImpl implements CustomerDao {
             ResultSet rs = ps.executeQuery();
             List<Trends> trendsListExpenses = new ArrayList<>();
             List<Trends> trendsListInvestments = new ArrayList<>();
+            List<Trends> trendsListExpenditure = new ArrayList<>();
             List<String> expenseCategories = List.of("Shopping","Entertainment","Food","Holiday");
             List<String> investCategories = List.of("Mutual Funds","Equity","SIP","Retirement Plan","Health","Term");
+            List<String> expenditureCategories = List.of("Total Income","Expenses","Investment");
             while (rs.next()){
                 if(expenseCategories.contains(rs.getString("Category_Sub_Type"))){
                     Trends trends = new Trends();
@@ -196,6 +198,12 @@ public class CustomerDaoImpl implements CustomerDao {
                     trends1.setLabel(rs.getString("Category_Sub_Type"));
                     trends1.setValue(rs.getString("spend_percentage"));
                     trendsListInvestments.add(trends1);
+                } else if(expenditureCategories.contains(rs.getString("Category_Sub_Type"))){
+                    Trends trends1 = new Trends();
+                    trends1.setId(String.valueOf(rs.getRow()));
+                    trends1.setLabel(rs.getString("Category_Sub_Type"));
+                    trends1.setValue(rs.getString("spend_percentage"));
+                    trendsListExpenditure.add(trends1);
                 }
             }
             rs.close();
@@ -204,7 +212,7 @@ public class CustomerDaoImpl implements CustomerDao {
             } else if("Investment".equalsIgnoreCase(category)) {
                 return trendsListInvestments;
             } else {
-                return null;
+                return trendsListExpenditure;
             }
         });
     }
@@ -255,6 +263,52 @@ public class CustomerDaoImpl implements CustomerDao {
             }
             rs.close();
             return age;
+        });
+    }
+
+    @Override
+    public List<Trends> getOverallTrendsByAgeIncome(String customerId,String category) {
+        double income = getIncomeOfCusomer(customerId);
+        int age = getAgeOfCustomer(customerId);
+        SqlParameterSource parameters = new MapSqlParameterSource().addValue("income", income).addValue("category",category).addValue("age",age);
+        final String sql = "select Category_Sub_Type, spend_percentage  from overall_trends where income_range_from<=:income and income_range_to>=:income and category= :category and age_range_from<=:age and age_range_to>=:age";
+        return template.execute(sql,parameters, ps -> {
+            ResultSet rs = ps.executeQuery();
+            List<Trends> trendsListExpenses = new ArrayList<>();
+            List<Trends> trendsListInvestments = new ArrayList<>();
+            List<Trends> trendsListExpenditure = new ArrayList<>();
+            List<String> expenseCategories = List.of("Shopping","Entertainment","Food","Holiday");
+            List<String> investCategories = List.of("Mutual Funds","Equity","SIP","Retirement Plan","Health","Term");
+            List<String> expenditureCategories = List.of("Total Income","Expenses","Investment");
+            while (rs.next()){
+                if(expenseCategories.contains(rs.getString("Category_Sub_Type"))){
+                    Trends trends = new Trends();
+                    trends.setId(String.valueOf(rs.getRow()));
+                    trends.setLabel(rs.getString("Category_Sub_Type"));
+                    trends.setValue(rs.getString("spend_percentage"));
+                    trendsListExpenses.add(trends);}
+                else if(investCategories.contains(rs.getString("Category_Sub_Type"))){
+                    Trends trends1 = new Trends();
+                    trends1.setId(String.valueOf(rs.getRow()));
+                    trends1.setLabel(rs.getString("Category_Sub_Type"));
+                    trends1.setValue(rs.getString("spend_percentage"));
+                    trendsListInvestments.add(trends1);
+                } else if(expenditureCategories.contains(rs.getString("Category_Sub_Type"))){
+                    Trends trends1 = new Trends();
+                    trends1.setId(String.valueOf(rs.getRow()));
+                    trends1.setLabel(rs.getString("Category_Sub_Type"));
+                    trends1.setValue(rs.getString("spend_percentage"));
+                    trendsListExpenditure.add(trends1);
+                }
+            }
+            rs.close();
+            if("Expense".equalsIgnoreCase(category)) {
+                return trendsListExpenses;
+            } else if("Investment".equalsIgnoreCase(category)) {
+                return trendsListInvestments;
+            } else {
+                return trendsListExpenditure;
+            }
         });
     }
 }
