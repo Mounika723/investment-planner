@@ -64,7 +64,8 @@ public class CustomerServiceTest {
     }
     @Test
     void getSuggestionsByGrowPercentageTest(){
-        Mockito.when(customerDao.getSuggestionsByGrowPercentage(Mockito.any())).thenReturn(new InvestmentSuggestions());
+        List<InvestmentSuggestions> investmentSuggestionsList = new ArrayList<>();
+        Mockito.when(customerDao.getSuggestionsByGrowPercentage(Mockito.any())).thenReturn(investmentSuggestionsList);
         Assertions.assertNotNull(customerService.getSuggestionsByGrowPercentage(1));
     }
 }

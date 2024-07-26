@@ -21,5 +21,5 @@ public interface CustomerDao {
 
     List<SubCategoryDetails> getDetailsByCategorySubCategory(String customerId, String category, String subCategory);
 
-    InvestmentSuggestions getSuggestionsByGrowPercentage(Integer growPercentage);
+    List<InvestmentSuggestions> getSuggestionsByGrowPercentage(Integer growPercentage);
 }

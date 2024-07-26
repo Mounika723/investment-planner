@@ -195,7 +195,8 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public InvestmentSuggestions getSuggestionsByGrowPercentage(Integer growPercentage) {
+    public List<InvestmentSuggestions> getSuggestionsByGrowPercentage(Integer growPercentage) {
+        List<InvestmentSuggestions> investmentSuggestionsList = new ArrayList<>();
         SqlParameterSource parameters = new MapSqlParameterSource("growPercentage", growPercentage);
         final String sql = "select risk_category,investment_suggestion from invest_guide where grow_percentage_from<=:growPercentage and grow_percentage_to>=:growPercentage";
         return template.execute(sql,parameters, ps -> {
@@ -205,9 +206,10 @@ public class CustomerDaoImpl implements CustomerDao {
                 investmentSuggestions.setId(String.valueOf(rs.getRow()));
                 investmentSuggestions.setRiskCategory(rs.getString("risk_category"));
                 investmentSuggestions.setInvestmentSuggestions(rs.getString("investment_suggestion"));
+                investmentSuggestionsList.add(investmentSuggestions);
             }
             rs.close();
-            return investmentSuggestions;
+            return investmentSuggestionsList;
         });
     }
 

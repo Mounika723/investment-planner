@@ -60,10 +60,12 @@ public class CustomerControllerTest {
     @Test
     void getSuggestionsByGrowPercentageTest(){
         InvestmentSuggestions investmentSuggestions = new InvestmentSuggestions();
+        List<InvestmentSuggestions> investmentSuggestionsList = new ArrayList<>();
         investmentSuggestions.setId("1");
         investmentSuggestions.setRiskCategory("Low");
         investmentSuggestions.setInvestmentSuggestions("Fixed Deposit");
-        Mockito.when(customerService.getSuggestionsByGrowPercentage(Mockito.any())).thenReturn(investmentSuggestions);
-        Assertions.assertEquals(investmentSuggestions.getInvestmentSuggestions(),customerController.getSuggestionsByGrowPercentage(5).getInvestmentSuggestions());
+        investmentSuggestionsList.add(investmentSuggestions);
+        Mockito.when(customerService.getSuggestionsByGrowPercentage(Mockito.any())).thenReturn(investmentSuggestionsList);
+        Assertions.assertEquals(investmentSuggestionsList.getFirst().getInvestmentSuggestions(),customerController.getSuggestionsByGrowPercentage(5).getFirst().getInvestmentSuggestions());
     }
 }

@@ -41,7 +41,7 @@ public class CustomerController {
         }
     }
     @GetMapping("investment/{growPercentage}")
-    public InvestmentSuggestions getSuggestionsByGrowPercentage(@PathVariable Integer growPercentage) {
+    public List<InvestmentSuggestions> getSuggestionsByGrowPercentage(@PathVariable Integer growPercentage) {
         return customerService.getSuggestionsByGrowPercentage(growPercentage);
     }
 }
