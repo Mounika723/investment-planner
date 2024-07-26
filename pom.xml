@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.lbg</groupId>
-	<artifactId>investment-planner</artifactId>
+	<artifactId>wealthvista-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>investment-planner</name>
+	<name>wealthvista-service</name>
 	<description>Hackathon Project</description>
 	<url/>
 	<licenses>
